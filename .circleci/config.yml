@@ -10,15 +10,15 @@ jobs:
       image: 'windows-server-2022-gui:current'
       shell: 'cmd.exe' #'powershell.exe -ExecutionPolicy Bypass'
     steps:
-      # Commands are run in a Windows virtual machine environment
+      # Commands are run in a Windows virtual machine environment $ENV:PATH;
       - run:
           name: "Set Variables"
           shell: cmd.exe
-          command: set WINDOWSSDKDIR=C:\Program Files (x86)\Windows Kits\10 && set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Community && set GYP_MSVS_VERSION=2022
+          command: set WINDOWSSDKDIR=C:\Program Files (x86)\Windows Kits\10 && set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Community && set GYP_MSVS_VERSION=2022 && echo %PATH%
       - run:
           name: "Set Path"
           shell: powershell.exe
-          command: setx /M PATH "$ENV:PATH;C:\Python\Python310\;C:\Python\Python310\Scripts\\"
+          command: setx /M PATH "C:\Python\Python310\;C:\Python\Python310\Scripts\\"
       - run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git .
       - run:  systeminfo
       - run:
