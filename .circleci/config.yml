@@ -11,7 +11,7 @@ jobs:
       shell: 'cmd.exe' #'powershell.exe -ExecutionPolicy Bypass'
     steps:
       # Commands are run in a Windows virtual machine environment
-      - run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git
+      - run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git .
       - run:  systeminfo
       - run:
           name: "Installing Python 3.10.6"
@@ -19,13 +19,12 @@ jobs:
           command:  |
             Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe -OutFile pythonInstall.exe
             Start-Process -FilePath .\pythonInstall.exe -ArgumentList "/passive /simple /quiet InstallAllUsers=1 TargetDir=C:\Python\Python310 CompileAll=1 PrependPath=1 Include_doc=0 Include_test=0" -NoNewWindow -Wait
-            cmd
-            rmdir /S /Q C:\tools\python\python.exe
-            mklink C:\Python\Python310\py.exe C:\Python\Python310\python.exe
-            mklink C:\Python\Python310\py3.exe C:\Python\Python310\python.exe
-            mklink C:\Python\Python310\python3.exe C:\Python\Python310\python.exe
-            mklink C:\Python\Python310\pyw.exe C:\Python\Python310\pythonw.exe
-            mklink C:\Python\Python310\py3w.exe C:\Python\Python310\pythonw.exe
+            cmd /c rmdir /S /Q C:\tools\python\python.exe
+            cmd /c mklink C:\Python\Python310\py.exe C:\Python\Python310\python.exe
+            cmd /c mklink C:\Python\Python310\py3.exe C:\Python\Python310\python.exe
+            cmd /c mklink C:\Python\Python310\python3.exe C:\Python\Python310\python.exe
+            cmd /c mklink C:\Python\Python310\pyw.exe C:\Python\Python310\pythonw.exe
+            cmd /c mklink C:\Python\Python310\py3w.exe C:\Python\Python310\pythonw.exe
       - run:
           name: "Check Python"
           shell: cmd.exe
