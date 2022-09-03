@@ -36,7 +36,7 @@ jobs:
       - run:
           name: "Check Python"
           shell: cmd.exe
-          command: set PATH=%PATH%;C:\Python\Python310\;C:\Python\Python310\Scripts\ && where python && python --version && echo print('Hello from Python')>pytest.py && python pytest.py && del pytest.py
+          command: where python && python --version && python3 --version && py --version && py3 --version && echo print('Hello from Python')>pytest.py && python pytest.py && del pytest.py
       - run:
             name: "Installing 7zip"
             shell: powershell.exe
@@ -63,7 +63,7 @@ jobs:
       - run: dir
       - run:
           name: "Build"
-          command: python3 build.py
+          command: py build.py
           no_output_timeout: 30m
       - run: py package.py
 
