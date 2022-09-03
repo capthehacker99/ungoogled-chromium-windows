@@ -8,7 +8,7 @@ jobs:
     resource_class: 'windows.medium'
     machine:
       image: 'windows-server-2022-gui:current'
-      shell: 'powershell.exe -ExecutionPolicy Bypass'
+      shell: 'cmd.exe' #'powershell.exe -ExecutionPolicy Bypass'
     steps:
       # Commands are run in a Windows virtual machine environment
       - checkout
@@ -19,8 +19,15 @@ jobs:
           command:  |
             Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe -OutFile pythonInstall.exe
             Start-Process -FilePath .\pythonInstall.exe -ArgumentList "/passive /simple /quiet InstallAllUsers=1 TargetDir=C:\Python\Python310 CompileAll=1 PrependPath=1 Include_doc=0 Include_test=0" -NoNewWindow -Wait
+      - run:
+          name: "Check Python"
+          shell: cmd.exe
+          command:  |
+            where python
             python --version
-      - run:  where python
+            echo print("Hello from Python")>pytest.py
+            python pytest.py
+            del pytest.py
       - run:
             name: "Installing 7zip"
             shell: powershell.exe
@@ -40,7 +47,7 @@ jobs:
               Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2164145" -OutFile WinSDKInstall.exe
               Start-Process -FilePath .\WinSDKInstall.exe -ArgumentList "/features + /q /norestart /ceip off" -NoNewWindow -Wait
       - run: dir
-      - run: python build.py
+      - run: C:\Python\Python310\python.exe build.py
       - run: python package.py
 
 
