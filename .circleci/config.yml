@@ -19,6 +19,7 @@ jobs:
           command:  |
             Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe -OutFile pythonInstall.exe
             Start-Process -FilePath .\pythonInstall.exe -ArgumentList "/passive /simple /quiet InstallAllUsers=1 TargetDir=C:\Python\Python310 CompileAll=1 PrependPath=1 Include_doc=0 Include_test=0" -NoNewWindow -Wait
+            where python
             python --version
       - run:
             name: "Installing 7zip"
@@ -32,7 +33,15 @@ jobs:
             command:  |
               Invoke-WebRequest -Uri "https://c2rsetup.officeapps.live.com/c2r/downloadVS.aspx?sku=community&channel=Release&version=VS2022" -OutFile VSInstall.exe
               Start-Process -FilePath .\VSInstall.exe -ArgumentList "--add Microsoft.VisualStudio.Workload.NativeDesktop Microsoft.VisualStudio.Component.VC.ATLMFC --includeRecommended --quiet --passive --norestart" -NoNewWindow -Wait
+      - run:
+            name: "Installing Windows SDK"
+            shell: powershell.exe
+            command: |
+              Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2164145" -OutFile WinSDKInstall.exe
+              Start-Process -FilePath .\WinSDKInstall.exe -ArgumentList "/features + /q /norestart /ceip off" -NoNewWindow -Wait
       - run: dir
+      - run: python build.py
+      - run: python package.py
 
 
 workflows:
