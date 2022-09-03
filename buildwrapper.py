@@ -32,5 +32,5 @@ def keepAlive():
 
 keepAliveInterval = IntervalTimer(10,keepAlive)
 keepAliveInterval.start()
-os.system("python build.py")
+exec(open("build.py").read())
 keepAliveInterval.stop()
