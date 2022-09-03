@@ -14,7 +14,11 @@ jobs:
       - run:
           name: "Set Variables"
           shell: cmd.exe
-          command: set WINDOWSSDKDIR=C:\Program Files (x86)\Windows Kits\10 && set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Community && set GYP_MSVS_VERSION = 2022 && setx /M PATH "%PATH%;C:\Python\Python310\;C:\Python\Python310\Scripts\\"
+          command: set WINDOWSSDKDIR=C:\Program Files (x86)\Windows Kits\10 && set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Community && set GYP_MSVS_VERSION=2022
+      - run:
+          name: "Set Path"
+          shell: powershell.exe
+          command: setx /M PATH "$ENV:PATH;C:\Python\Python310\;C:\Python\Python310\Scripts\\"
       - run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git .
       - run:  systeminfo
       - run:
