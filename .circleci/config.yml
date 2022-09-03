@@ -17,11 +17,23 @@ jobs:
           name: "Installing Python 3.10.6"
           shell: powershell.exe
           command:  |
-            cd $ENV:TEMP
             Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe -OutFile pythonInstall.exe
             Start-Process -FilePath .\pythonInstall.exe -ArgumentList "/passive /simple /quiet InstallAllUsers=1 TargetDir=C:\Python\Python310 CompileAll=1 PrependPath=1 Include_doc=0 Include_test=0" -NoNewWindow -Wait
-            
-        
+            python --version
+      - run:
+            name: "Installing 7zip"
+            shell: powershell.exe
+            command:  |
+              Invoke-WebRequest -Uri https://www.7-zip.org/a/7z2201-x64.exe -OutFile 7zipInstall.exe
+              Start-Process -FilePath .\7zipInstall.exe -ArgumentList "/S"
+      - run:
+            name: "Installing Visual Studio"
+            shell: powershell.exe
+            command:  |
+              Invoke-WebRequest -Uri "https://c2rsetup.officeapps.live.com/c2r/downloadVS.aspx?sku=community&channel=Release&version=VS2022" -OutFile VSInstall.exe
+              Start-Process -FilePath .\VSInstall.exe -ArgumentList "--add Microsoft.VisualStudio.Workload.NativeDesktop Microsoft.VisualStudio.Component.VC.ATLMFC --includeRecommended --quiet --passive --norestart"
+      - run: dir
+
 
 workflows:
   version: 2
