@@ -1,5 +1,6 @@
 from threading import Thread, Event
 import random
+import os
 from time import sleep
 # StoppableThread is from user Dolphin, from http://stackoverflow.com/questions/5849484/how-to-exit-a-multithreaded-program
 class StoppableThread(Thread):  
