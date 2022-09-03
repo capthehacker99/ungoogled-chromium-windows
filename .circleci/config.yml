@@ -19,15 +19,11 @@ jobs:
           command:  |
             Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe -OutFile pythonInstall.exe
             Start-Process -FilePath .\pythonInstall.exe -ArgumentList "/passive /simple /quiet InstallAllUsers=1 TargetDir=C:\Python\Python310 CompileAll=1 PrependPath=1 Include_doc=0 Include_test=0" -NoNewWindow -Wait
+            rmdir /S /Q C:\tools\python\python.exe
       - run:
           name: "Check Python"
           shell: cmd.exe
-          command:  |
-            where python
-            python --version
-            echo print("Hello from Python")>pytest.py
-            python pytest.py
-            del pytest.py
+          command: where python && python --version && echo print("Hello from Python")>pytest.py && python pytest.py && del pytest.py
       - run:
             name: "Installing 7zip"
             shell: powershell.exe
