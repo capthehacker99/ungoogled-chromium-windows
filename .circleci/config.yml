@@ -70,7 +70,8 @@ jobs:
           name: "Build and Package"
           command: buildwrapper.bat
           no_output_timeout: 30m
-
+      - store_artifacts:
+          path: .\build
 
 workflows:
   version: 2
