@@ -18,4 +18,3 @@ dcheck_always_on=false
 enable_nacl=false
 msan_track_origins=0
 optimize_webui=true
-ndk_supports_vulkan=true
