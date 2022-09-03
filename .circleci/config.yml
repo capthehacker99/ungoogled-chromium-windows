@@ -40,7 +40,7 @@ jobs:
             shell: powershell.exe
             command:  |
               Invoke-WebRequest -Uri "https://c2rsetup.officeapps.live.com/c2r/downloadVS.aspx?sku=community&channel=Release&version=VS2022" -OutFile VSInstall.exe
-              Start-Process -FilePath .\VSInstall.exe -ArgumentList "--add Microsoft.VisualStudio.Workload.NativeDesktop Microsoft.VisualStudio.Component.VC.ATLMFC --includeRecommended --quiet --passive --norestart --wait" -NoNewWindow -Wait
+              Start-Process -FilePath .\VSInstall.exe -ArgumentList "modifySettings --add Microsoft.VisualStudio.Workload.NativeDesktop Microsoft.VisualStudio.Component.VC.ATLMFC --includeRecommended --quiet --passive --norestart --wait" -NoNewWindow -Wait
       - run:
             name: "Installing Windows SDK"
             shell: powershell.exe
