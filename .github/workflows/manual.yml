@@ -1,0 +1,76 @@
+name: make_app
+on: [workflow_dispatch]
+defaults:
+  run:
+    shell: cmd
+jobs:
+  build_deploy:
+    runs-on: windows-2022
+    steps:
+      # Commands are run in a Windows virtual machine environment $ENV:PATH;
+      - id: Set_Variables
+        name: "Set Variables"
+        shell: cmd
+        run: set WINDOWSSDKDIR=C:\Program Files (x86)\Windows Kits\10 && set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Community && set GYP_MSVS_VERSION=2022 && echo %PATH% && set PATH="C:\Windows\System32;C:\Windows;C:\Windows\System32\wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Google\Compute Engine\sysprep;C:\PROGRA~3\CHOCOL~1\bin;C:\PROGRA~1\Git\cmd;C:\PROGRA~1\Git\mingw64\bin;C:\PROGRA~1\Git\usr\bin;C:\Program Files\Git LFS;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Go\bin;C:\PROGRA~1\nodejs\;C:\ProgramData\nvm;C:\PROGRA~1\nodejs;C:\Program Files\Docker;C:\PROGRA~1\dotnet\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\IncrediBuild;C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\BinC:\Python\Python310\;C:\Python\Python310\Scripts\\"
+      - id: Set_Path
+        name: "Set Path"
+        shell: powershell
+        run: setx /M PATH "C:\Windows\System32;C:\Windows;C:\Windows\System32\wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Google\Compute Engine\sysprep;C:\PROGRA~3\CHOCOL~1\bin;C:\PROGRA~1\Git\cmd;C:\PROGRA~1\Git\mingw64\bin;C:\PROGRA~1\Git\usr\bin;C:\Program Files\Git LFS;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Go\bin;C:\PROGRA~1\nodejs\;C:\ProgramData\nvm;C:\PROGRA~1\nodejs;C:\Program Files\Docker;C:\PROGRA~1\dotnet\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\IncrediBuild;C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\BinC:\Python\Python310\;C:\Python\Python310\Scripts\\"
+      - id: Clone_Repository
+        name: "Clone Repository"
+        shell: cmd
+        run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git .
+      - id: Get_Python
+        name: "Installing Python 3.10.6"
+        shell: powershell
+        run:  |
+            Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe -OutFile pythonInstall.exe
+            Start-Process -FilePath .\pythonInstall.exe -ArgumentList "/passive /simple /quiet InstallAllUsers=1 TargetDir=C:\Python\Python310 CompileAll=1 PrependPath=1 Include_doc=0 Include_test=0" -NoNewWindow -Wait
+            cmd /c rmdir /S /Q C:\tools\python
+            cmd /c mklink C:\Python\Python310\py.exe C:\Python\Python310\python.exe
+            cmd /c mklink C:\Python\Python310\py3.exe C:\Python\Python310\python.exe
+            cmd /c mklink C:\Python\Python310\python3.exe C:\Python\Python310\python.exe
+            cmd /c mklink C:\Python\Python310\pyw.exe C:\Python\Python310\pythonw.exe
+            cmd /c mklink C:\Python\Python310\py3w.exe C:\Python\Python310\pythonw.exe
+      - id: Check_Python
+        name: "Check Python"
+        shell: cmd
+        run: set PATH=C:\Windows\System32;C:\Windows;C:\Windows\System32\wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\PowerShell\7\;C:\Program Files\Google\Compute Engine\sysprep;C:\PROGRA~3\CHOCOL~1\bin;C:\PROGRA~1\Git\cmd;C:\PROGRA~1\Git\mingw64\bin;C:\PROGRA~1\Git\usr\bin;C:\Program Files\Git LFS;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Go\bin;C:\PROGRA~1\nodejs\;C:\ProgramData\nvm;C:\PROGRA~1\nodejs;C:\Program Files\Docker;C:\PROGRA~1\dotnet\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\IncrediBuild;C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin;C:\Python\Python310\;C:\Python\Python310\Scripts\ && where python && python --version && python3 --version && py --version && py3 --version && echo print('Hello from Python')>pytest.py && python pytest.py && del pytest.py
+      - id: Get_7zip
+        name: "Installing 7zip"
+        shell: powershell
+        run:  |
+          Invoke-WebRequest -Uri https://www.7-zip.org/a/7z2201-x64.exe -OutFile 7zipInstall.exe
+          Start-Process -FilePath .\7zipInstall.exe -ArgumentList "/S" -NoNewWindow -Wait
+      - id: Get_VS
+        name: "Installing Visual Studio"
+        shell: powershell
+        run:  |
+          Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vs_community.exe" -OutFile VSInstall.exe
+          Start-Process -FilePath .\VSInstall.exe -ArgumentList "modifySettings --add Microsoft.VisualStudio.Workload.NativeDesktop Microsoft.VisualStudio.Component.VC.ATLMFC --includeRecommended --quiet --passive --norestart --wait" -NoNewWindow -Wait
+      - id: Get_Win_SDK
+        name: "Installing Windows SDK"
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "https://go.microsoft.com/fwlink/?linkid=2164145" -OutFile WinSDKInstall.exe
+          Start-Process -FilePath .\WinSDKInstall.exe -ArgumentList "/features + /q /norestart /ceip off" -NoNewWindow -Wait
+      - id: Get_Flags
+        name: "Changing flags"
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/flags.windows.gn" -OutFile flags.windows.gn
+      - id: Get_Build_Wrapper
+        name: "Getting Build Wrapper Script"
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/buildwrapper.bat" -OutFile buildwrapper.bat
+      - id: Build
+        name: "Build and Package"
+        shell: cmd
+        run: buildwrapper.bat
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: .\build
+          retention-days: 3
