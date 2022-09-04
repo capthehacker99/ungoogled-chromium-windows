@@ -25,7 +25,8 @@ jobs:
         shell: powershell
         run:  |
             Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.6/python-3.10.6-amd64.exe -OutFile pythonInstall.exe
-            Start-Process -FilePath .\pythonInstall.exe -ArgumentList "/passive /simple /quiet InstallAllUsers=1 TargetDir=C:\Python\Python310 CompileAll=1 PrependPath=1 Include_doc=0 Include_test=0" -NoNewWindow -Wait
+            Start-Process -FilePath .\pythonInstall.exe -ArgumentList "/passive /simple /quiet /log pyInstall.txt InstallAllUsers=1 TargetDir=C:\Python\Python310 CompileAll=1 PrependPath=1 Include_doc=0 Include_test=0" -NoNewWindow -Wait
+            cmd /c type pyInstall.txt
             cmd /c dir C:\
             cmd /c mklink C:\Python\Python310\py.exe C:\Python\Python310\python.exe
             cmd /c mklink C:\Python\Python310\py3.exe C:\Python\Python310\python.exe
