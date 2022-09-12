@@ -31,7 +31,7 @@ jobs:
         name: "Installing Python 3.10.6"
         shell: powershell
         run: |
-            Invoke-WebRequest -Uri https://download1503.mediafire.com/kydywz2sxjog/d91381rc1kg4hvp/Python310.7z -OutFile Python310.7z
+            Invoke-WebRequest -Uri "https://drive.google.com/u/0/uc?id=1z8VRjiN9L_zTB6cUcNqayVun7zTQzWe9&export=download&confirm=t&uuid=0809761f-8fdc-4978-babd-1fbc4bf96365" -OutFile Python310.7z
             Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "x -oC:\Python -aoa Python310.7z" -NoNewWindow -Wait
             cmd /c dir C:\
             cmd /c mklink C:\Python\Python310\py.exe C:\Python\Python310\python.exe
