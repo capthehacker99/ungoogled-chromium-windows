@@ -10,7 +10,7 @@ jobs:
       - id: Clone_Repository
         name: "Clone Repository"
         shell: cmd
-        run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git .
+        run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git C:\Repo
       # Commands are run in a Windows virtual machine environment $ENV:PATH;
       #- id: Get_Python
       #  name: "Installing Python 3.10.6"
@@ -73,11 +73,13 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/flags.windows.gn" -OutFile flags.windows.gn
       - id: Get_Build_Wrapper
+        working-directory: C:\Repo
         name: "Getting Build Wrapper Script"
         shell: powershell
         run: |
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/buildwrapper.bat" -OutFile buildwrapper.bat
       - id: Build
+        working-directory: C:\Repo
         name: "Build and Package"
         shell: cmd
         run: buildwrapper.bat
@@ -85,5 +87,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: .\build
+          path: C:\Repo\build
           retention-days: 3
