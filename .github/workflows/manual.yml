@@ -7,6 +7,10 @@ jobs:
   build_deploy:
     runs-on: windows-2022
     steps:
+      - id: Clone_Repository
+        name: "Clone Repository"
+        shell: cmd
+        run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git .
       # Commands are run in a Windows virtual machine environment $ENV:PATH;
       #- id: Get_Python
       #  name: "Installing Python 3.10.6"
@@ -51,10 +55,6 @@ jobs:
         name: "Check Python"
         shell: cmd
         run: set PATH=C:\PROGRA~1\dotnet;C:\Program Files (x86)\GitHub CLI;C:\PROGRA~1\Git\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\PROGRA~1\dotnet\;C:\PROGRA~3\CHOCOL~1\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\7\;C:\Program Files\Microsoft\Web Platform Installer\;C:\PROGRA~1\OpenSSL\bin;C:\PROGRA~1\CMake\bin;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.8.6\bin;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\PROGRA~1\nodejs\;C:\PROGRA~1\Git\cmd;C:\PROGRA~1\Git\mingw64\bin;C:\PROGRA~1\Git\usr\bin;C:\Program Files\GitHub CLI\;C:\Program Files (x86)\sbt\bin;C:\SeleniumWebDrivers\ChromeDriver\;C:\SeleniumWebDrivers\EdgeDriver\;C:\Program Files\Amazon\AWSCLIV2\;C:\Program Files\Amazon\SessionManagerPlugin\bin\;C:\Program Files\Amazon\AWSSAMCLI\bin\;C:\PROGRA~1\MICROS~3\130\Tools\Binn\;C:\Program Files\LLVM\bin;C:\Users\runneradmin\.dotnet\tools;C:\Users\runneradmin\.cargo\bin;C:\Python\Python310\;C:\Python\Python310\Scripts\ && where python && python --version && python3 --version && py --version && py3 --version && echo print('Hello from Python')>pytest.py && python pytest.py && del pytest.py
-      - id: Clone_Repository
-        name: "Clone Repository"
-        shell: cmd
-        run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git .
       - id: Get_VS
         name: "Installing Visual Studio"
         shell: powershell
