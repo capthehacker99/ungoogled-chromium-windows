@@ -4,7 +4,7 @@ defaults:
   run:
     shell: cmd
 jobs:
-  build_deploy:
+  build_0:
     runs-on: windows-2022
     steps:
       - id: Clone_Repository
@@ -80,12 +80,17 @@ jobs:
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/buildwrapper.bat" -OutFile buildwrapper.bat
       - id: Build
         working-directory: C:\Repo
-        name: "Build and Package"
+        name: "Build"
         shell: cmd
         run: buildwrapper.bat
+      - id: UploadCache
+        working-directory: C:\Repo
+        name: "Upload Cache"
+        shell: powershell
+        run: Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "a -tzip C:\Repo\artifacts.zip C:\Repo\build\src -mx=3 -mtc=on" -NoNewWindow -Wait
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: C:\Repo\build
+          path: C:\Repo\artifacts.zip
           retention-days: 3
