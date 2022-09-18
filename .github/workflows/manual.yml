@@ -96,6 +96,7 @@ jobs:
           path: C:\Repo\artifacts.zip
           retention-days: 3
   build_1:
+    needs: build_0
     runs-on: windows-2022
     steps:
       - id: Clone_Repository
@@ -177,6 +178,7 @@ jobs:
           path: C:\Repo\artifacts.zip
           retention-days: 3
   build_2:
+    needs: build_1
     runs-on: windows-2022
     steps:
       - id: Clone_Repository
@@ -258,6 +260,7 @@ jobs:
           path: C:\Repo\artifacts.zip
           retention-days: 3
   build_3:
+    needs: build_2
     runs-on: windows-2022
     steps:
       - id: Clone_Repository
