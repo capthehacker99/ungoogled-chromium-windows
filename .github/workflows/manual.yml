@@ -103,7 +103,7 @@ jobs:
         name: "Clone Repository"
         shell: cmd
         run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git C:\Repo
-      - uses: actions/artifact-download@v3
+      - uses: actions/download-artifact@v3.0.0
         with:
           name: cache-artifact
           path: C:\Repo\artifacts.zip
@@ -185,7 +185,7 @@ jobs:
         name: "Clone Repository"
         shell: cmd
         run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git C:\Repo
-      - uses: actions/artifact-download@v3
+      - uses: actions/download-artifact@v3.0.0
         with:
           name: cache-artifact
           path: C:\Repo\artifacts.zip
@@ -267,7 +267,7 @@ jobs:
         name: "Clone Repository"
         shell: cmd
         run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git C:\Repo
-      - uses: actions/artifact-download@v3
+      - uses: actions/download-artifact@v3.0.0
         with:
           name: cache-artifact
           path: C:\Repo\artifacts.zip
