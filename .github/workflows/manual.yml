@@ -118,7 +118,7 @@ jobs:
         shell: powershell
         run:  |
           Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "x C:\Repo\artifacts.zip -oC:\Repo\build -y" -NoNewWindow -Wait
-          Remove-Item C:\Repo\artifacts.zip
+          Remove-Item -Path C:\Repo\artifacts.zip -Recurse -Force
       - id: Get_Python
         name: "Installing Python 3.10.6"
         shell: powershell
@@ -200,7 +200,7 @@ jobs:
         shell: powershell
         run:  |
           Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "x C:\Repo\artifacts.zip -oC:\Repo\build -y" -NoNewWindow -Wait
-          Remove-Item C:\Repo\artifacts.zip
+          Remove-Item -Path C:\Repo\artifacts.zip -Recurse -Force
       - id: Get_Python
         name: "Installing Python 3.10.6"
         shell: powershell
@@ -282,7 +282,7 @@ jobs:
         shell: powershell
         run:  |
           Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "x C:\Repo\artifacts.zip -oC:\Repo\build -y" -NoNewWindow -Wait
-          Remove-Item C:\Repo\artifacts.zip
+          Remove-Item -Path C:\Repo\artifacts.zip -Recurse -Force
       - id: Get_Python
         name: "Installing Python 3.10.6"
         shell: powershell
