@@ -162,6 +162,7 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/buildwrapper.bat" -OutFile buildwrapper.bat
       - id: Build
+        continue-on-error: true
         working-directory: C:\Repo
         name: "Build"
         shell: cmd
@@ -244,6 +245,7 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/buildwrapper.bat" -OutFile buildwrapper.bat
       - id: Build
+        continue-on-error: true
         working-directory: C:\Repo
         name: "Build"
         shell: cmd
@@ -326,6 +328,7 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/buildwrapper.bat" -OutFile buildwrapper.bat
       - id: Build
+        continue-on-error: true
         working-directory: C:\Repo
         name: "Build"
         shell: cmd
