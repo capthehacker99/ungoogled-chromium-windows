@@ -499,11 +499,17 @@ jobs:
         name: "Build"
         shell: cmd
         run: buildwrapper.bat
+      - id: Get_Package_Wrapper
+        working-directory: C:\Repo
+        name: "Getting Package Wrapper Script"
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/packageWrapper.bat" -OutFile packagewrapper.bat
       - id: Package
         working-directory: C:\Repo
         name: "Package"
         shell: cmd
-        run: python.exe package.py
+        run: packagewrapper.bat
       - id: PackCache
         working-directory: C:\Repo
         name: "Pack Cache"
