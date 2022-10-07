@@ -10,7 +10,7 @@ jobs:
       - id: Clone_Repository
         name: "Clone Repository"
         shell: cmd
-        run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git C:\Repo
+        run: git clone --recurse-submodules https://github.com/ungoogled-software/ungoogled-chromium-windows.git C:\Repo && rmdir /S /Q C:\hostedtoolcache\windows\Python
       # Commands are run in a Windows virtual machine environment $ENV:PATH;
       #- id: Get_Python
       #  name: "Installing Python 3.10.6"
