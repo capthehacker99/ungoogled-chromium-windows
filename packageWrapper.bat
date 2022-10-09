@@ -2,4 +2,4 @@ set PATH=C:\PROGRA~1\dotnet;C:\Program Files (x86)\GitHub CLI;C:\PROGRA~1\Git\bi
 set WINDOWSSDKDIR=C:\Program Files (x86)\Windows Kits\10
 set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Community
 set GYP_MSVS_VERSION=2022
-py package.py
+python package.py
