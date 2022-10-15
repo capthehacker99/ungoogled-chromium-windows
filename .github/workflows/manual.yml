@@ -506,6 +506,7 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/capthehacker99/ungoogled-chromium-windows/master/packageWrapper.bat" -OutFile packagewrapper.bat
       - id: Package
+        continue-on-error: true
         working-directory: C:\Repo
         name: "Package"
         shell: cmd
