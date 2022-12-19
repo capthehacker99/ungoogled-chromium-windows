@@ -84,16 +84,16 @@ jobs:
         name: "Build"
         shell: cmd
         run: buildwrapper.bat
-      - id: PackCache
-        working-directory: C:\Repo
-        name: "Pack Cache"
-        shell: powershell
-        run: Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "a -tzip C:\Repo\artifacts.zip C:\Repo\build\src -mx=3 -mtc=on" -NoNewWindow -Wait
+      #- id: PackCache
+      #  working-directory: C:\Repo
+      #  name: "Pack Cache"
+      #  shell: powershell
+      #  run: Start-Process -FilePath "C:\Program Files\7-Zip\7z.exe" -ArgumentList "a -tzip C:\Repo\artifacts.zip C:\Repo\build\src -mx=3 -mtc=on" -NoNewWindow -Wait
       - name: 'Upload Cache'
         uses: actions/upload-artifact@v3
         with:
           name: cache-artifact
-          path: C:\Repo\artifacts.zip
+          path: C:\Repo\build\src
           retention-days: 3
   build_1:
     needs: build_0
@@ -106,7 +106,7 @@ jobs:
       - uses: actions/download-artifact@v3.0.0
         with:
           name: cache-artifact
-          path: C:\Repo\artifacts.zip
+          path: C:\Repo\build\src
       - id: Get_7zip
         name: "Installing 7zip"
         shell: powershell
