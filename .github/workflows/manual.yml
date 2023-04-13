@@ -25,6 +25,10 @@ jobs:
       #      cmd /c mklink C:\Python\Python310\python3.exe C:\Python\Python310\python.exe
       #      cmd /c mklink C:\Python\Python310\pyw.exe C:\Python\Python310\pythonw.exe
       #      cmd /c mklink C:\Python\Python310\py3w.exe C:\Python\Python310\pythonw.exe
+      - id: Add_Winrar
+        name: "Add extractor = winrar"
+        shell: cmd
+        run: echo extractor = winrar >> C:\Repo\ungoogled-chromium-windows\downloads.ini
       - id: Get_7zip
         name: "Installing 7zip"
         shell: powershell
@@ -107,6 +111,10 @@ jobs:
         with:
           name: cache-artifact
           path: C:\Repo\artifacts.zip
+      - id: Add_Winrar
+        name: "Add extractor = winrar"
+        shell: cmd
+        run: echo extractor = winrar >> C:\Repo\ungoogled-chromium-windows\downloads.ini
       - id: Get_7zip
         name: "Installing 7zip"
         shell: powershell
