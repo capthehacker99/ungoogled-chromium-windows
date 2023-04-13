@@ -28,7 +28,7 @@ jobs:
       - id: Add_Winrar
         name: "Add extractor = winrar"
         shell: cmd
-        run: echo extractor = winrar >> C:\Repo\ungoogled-chromium-windows\downloads.ini
+        run: echo extractor = winrar >> C:\Repo\downloads.ini
       - id: Get_7zip
         name: "Installing 7zip"
         shell: powershell
@@ -114,7 +114,7 @@ jobs:
       - id: Add_Winrar
         name: "Add extractor = winrar"
         shell: cmd
-        run: echo extractor = winrar >> C:\Repo\ungoogled-chromium-windows\downloads.ini
+        run: echo extractor = winrar >> C:\Repo\downloads.ini
       - id: Get_7zip
         name: "Installing 7zip"
         shell: powershell
